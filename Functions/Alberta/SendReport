@@ -1,0 +1,149 @@
+var userCode = Db.UDCodes.Where(r => r.CodeTypeID == "GHAOrdRep");
+string targetDay = userCode.FirstOrDefault(r => r.CodeID == "RepDay").CodeDesc; // Wednesday
+string targetTime = userCode.FirstOrDefault(r => r.CodeID == "RepTime").CodeDesc; // 15:55
+
+DateTime dateTime = DateTime.Now;
+if (dateTime.DayOfWeek.ToString().ToUpper() != targetDay.ToUpper() || dateTime.ToString("HH:mm") != targetTime)
+{
+  return;
+}
+
+const string senderEmail = "support@alberta.com.mt";
+
+Action<string, List<string>, string, string, Dictionary<string, byte[]>> sendEmail =
+(fromEmail, recipient, subject, body, attachments) =>
+{
+  using (var smtpClient = new Ice.Mail.SmtpMailer(Session))
+  {
+    var mailMessage = new Ice.Mail.SmtpMail
+    {
+        From = fromEmail,
+        To = recipient,
+        Subject = subject,
+        Body = body
+    };
+
+    smtpClient.Send(mailMessage, attachments);
+  }
+};
+
+// trims unnecessary columns (Calculated_Error, EmpBasic_EMailAddress, UserFile_EMailAddress) from report
+Func<List<DataRow>, bool, List<DataRow>> trimColumns = (rows, includeError) =>
+{
+    DataTable trimmedColumnTable = new DataTable();
+    trimmedColumnTable.Columns.Add("Order Number");
+    trimmedColumnTable.Columns.Add("Order Line");
+    trimmedColumnTable.Columns.Add("Project ID");
+    trimmedColumnTable.Columns.Add("Project Description");
+    trimmedColumnTable.Columns.Add("Name");
+    trimmedColumnTable.Columns.Add("Project Manager");
+    trimmedColumnTable.Columns.Add("Entry Person");
+    trimmedColumnTable.Columns.Add("Email Address");
+    if (includeError)
+        trimmedColumnTable.Columns.Add("Error Message");
+
+    foreach (var row in rows)
+    {
+        var newRow = trimmedColumnTable.NewRow();
+        newRow["Order Number"] = row["OrderHed_OrderNum"];
+        newRow["Order Line"] = row["OrderDtl_OrderLine"];
+        newRow["Project ID"] = row["Project_ProjectID"];
+        newRow["Project Description"] = row["Project_Description"];
+        newRow["Name"] = row["Customer_Name"];
+        newRow["Project Manager"] = row["EmpBasic_Name"];
+        newRow["Entry Person"] = row["OrderHed_EntryPerson"];
+        newRow["Email Address"] = row["EmpBasic_EMailAddress"];
+        if (includeError)
+            newRow["Error Message"] = row["Calculated_Error"];
+
+        trimmedColumnTable.Rows.Add(newRow);
+    }
+
+    return trimmedColumnTable.AsEnumerable().ToList();
+};
+
+
+
+///////// CSV RELATED
+Func<object, string> escapeCsv =
+v =>
+{
+  var s = v?.ToString() ?? string.Empty;
+  if (s.Contains('"')) s = s.Replace("\"", "\"\"");
+  if (s.IndexOfAny(new[] { ',', '\n', '\r' }) >= 0)
+      s = $"\"{s}\"";
+  return s;
+};
+
+Func<List<DataRow>, string> rowsToCsv = rows =>
+{
+  if (rows == null || rows.Count == 0) return string.Empty;
+
+  var sb = new StringBuilder();
+
+  var columns = rows[0].Table.Columns.Cast<DataColumn>()
+                       .Select(c => c.ColumnName)
+                       .ToArray();
+  sb.AppendLine(string.Join(",", columns.Select(escapeCsv)));
+
+  foreach (var r in rows)
+  {
+    var fields = columns.Select(col => escapeCsv(r[col]));
+    sb.AppendLine(string.Join(",", fields));
+  }
+  return sb.ToString();
+};
+
+Func<string, bool, Dictionary<string, byte[]>> csvToAttachment =
+(csv, isError) =>
+{
+  var bytes = Encoding.UTF8.GetPreamble()
+                           .Concat(Encoding.UTF8.GetBytes(csv))
+                           .ToArray();
+
+  return new Dictionary<string, byte[]>
+  {
+    { isError ? "ProjectOrderErrorReport.csv" : "ProjectOrderReport.csv", bytes }
+  };
+};
+///////// CSV RELATED
+
+
+string errorEmail = userCode.FirstOrDefault(r => r.CodeID == "ErrEmail").CodeDesc;
+
+// query GHA_SalesOrderReport BAQ and build a datatable
+EnumerableRowCollection<DataRow> result;
+var db = Ice.Services.ContextFactory.CreateContext<IceContext>();
+using (var dynamicQuerySvc = Ice.Assemblies.ServiceRenderer.GetService<Ice.Contracts.DynamicQuerySvcContract>(db))  
+{  
+  var baqExecutionParams = dynamicQuerySvc.GetQueryExecutionParametersByID("GHA_SalesOrderReport");  
+
+  DataSet executeResult = dynamicQuerySvc.ExecuteByID("GHA_SalesOrderReport", baqExecutionParams);
+  result = executeResult.Tables["Results"].AsEnumerable();
+}
+
+List<DataRow> nonErrorRows = result.Where(r => r["Calculated_Error"] == "").ToList();
+nonErrorRows = trimColumns(nonErrorRows, false);
+
+List<DataRow> errorRows = result.Where(r => r["Calculated_Error"] != "").ToList();
+errorRows = trimColumns(errorRows, true);
+
+if (errorRows.Count > 0)
+{
+  string csv = rowsToCsv(errorRows);
+  Dictionary<string, byte[]> attachment = csvToAttachment(csv, true);
+
+  // recipient has to be a list, presumably for bulk emailing. unsure if a work-around (apart from the below) exists
+  sendEmail(senderEmail, new List<string>() { errorEmail }, "Sales Order Reporting Errors", "See attached.", attachment);
+}
+
+Dictionary<string, List<DataRow>> recipientsToReport = nonErrorRows.GroupBy(row => row["Email Address"].ToString())
+                                                                   .ToDictionary(g => g.Key, g => g.ToList());
+
+foreach (KeyValuePair<string, List<DataRow>> kvp in recipientsToReport)
+{
+  string csv = rowsToCsv(kvp.Value);
+  Dictionary<string, byte[]> attachment = csvToAttachment(csv, false);
+  
+  sendEmail(senderEmail, new List<string> { kvp.Key }, "Sales Order Report", "See attached.", attachment);
+}
