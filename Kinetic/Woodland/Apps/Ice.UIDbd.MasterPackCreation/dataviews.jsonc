@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v4.0/dataviews.json",
+  "contentVersion": "4.0",
+  "imports": [],
+  "dataviews": [
+    {
+      "id": "CreateView",
+      "schema": "Erp",
+      "customizable": true,
+      "additionalColumns": [
+        {
+          "columnName": "ShipHead_CustNum",
+          "datatype": "number"
+        },
+        {
+          "columnName": "ShipHead_ShipViaCode",
+          "datatype": "string"
+        },
+        {
+          "columnName": "Calculated_Add",
+          "caption": "Add",
+          "format": "Yes/No",
+          "datatype": "boolean"
+        },
+        {
+          "columnName": "Calculated_NeedBy",
+          "datatype": "datetime"
+        },
+        {
+          "columnName": "Calculated_ShipBy",
+          "datatype": "string"
+        },
+        {
+          "columnName": "Customer_CustID",
+          "datatype": "string"
+        },
+        {
+          "columnName": "Customer_Name",
+          "datatype": "string"
+        },
+        {
+          "columnName": "ShipHead_PackNum",
+          "format": ">>>>>>>>9",
+          "datatype": "number"
+        }
+      ],
+      "confirmChanges": false
+    },
+    {
+      "data": "Ship_MasterPacking",
+      "schema": "baq",
+      "tableId": "MasterPacking",
+      "viewId": "MasterPacking",
+      "id": "MasterPacking",
+      "isSystemView": false,
+      "staticFilter": "",
+      "openDesigner": true,
+      "table": "MasterPacking",
+      "customizable": true,
+      "confirmChanges": false
+    }
+  ],
+  "patch": []
+}

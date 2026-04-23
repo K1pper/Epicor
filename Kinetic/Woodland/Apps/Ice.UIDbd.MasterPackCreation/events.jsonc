@@ -1,0 +1,289 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v5.0/events.json",
+  "contentVersion": "5.0",
+  "imports": [],
+  "events": [
+    {
+      "id": "window",
+      "trigger": {
+        "type": "Window",
+        "hook": "onLoad"
+      },
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "executeRefreshAll"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "executeRefreshAll",
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "refresh_MasterPacking"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh_MasterPacking",
+      "actions": [
+        {
+          "type": "property-set",
+          "param": {
+            "component": "c87231e4-b29f-44e7-a635-d0e95325a4bc",
+            "props": [
+              {
+                "prop": "invalidated",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refreshAll",
+      "trigger": {
+        "type": "Control",
+        "target": "refreshAll",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "executeRefreshAll"
+        }
+      ]
+    },
+    {
+      "id": "window_events",
+      "trigger": {
+        "type": "Event",
+        "hook": "after",
+        "target": "window"
+      },
+      "actions": []
+    },
+    {
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svc": "Erp.BO.MasterPackSvc",
+            "svcPath": "GetList",
+            "methodParameters": [
+              {
+                "field": "whereClause",
+                "value": "ShipStatus = 'CLOSED' and ShipViaCode = 'REA'"
+              },
+              {
+                "field": "pageSize",
+                "value": ""
+              },
+              {
+                "field": "absolutePage",
+                "value": ""
+              }
+            ],
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "responseParamArgs": [
+                {
+                  "viewName": "MasterpackList",
+                  "responsePath": "returnObj",
+                  "paramName": "MasterpackList"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "id": "BO_MasterPack_GetList",
+      "description": "Get data for BO method: GetList",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svc": "Erp.BO.MasterPackSvc",
+            "svcPath": "Update",
+            "methodParameters": [
+              {
+                "field": "ds",
+                "type": "dataset"
+              }
+            ],
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "requestParamArgs": [
+                {
+                  "dataset": {
+                    "systemCode": "Erp",
+                    "datasetId": "MasterpackList"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "id": "BO_MasterpackList_Update",
+      "description": "Update",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svc": "Erp.BO.CustShipSvc",
+            "svcPath": "GetList",
+            "methodParameters": [
+              {
+                "field": "whereClause",
+                "value": ""
+              },
+              {
+                "field": "pageSize",
+                "value": ""
+              },
+              {
+                "field": "absolutePage",
+                "value": ""
+              }
+            ],
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "responseParamArgs": [
+                {
+                  "viewName": "ShipHeadList",
+                  "responsePath": "returnObj",
+                  "paramName": "ShipHeadList"
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "id": "BO_CustShip_GetList",
+      "description": "Get data for BO method: GetList",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "erp-message-handler",
+          "param": {
+            "type": "Slideout",
+            "level": "info",
+            "buttons": "ok",
+            "message": "OK {{CreateView.ShipHead_PackNum}}"
+          },
+          "option": {},
+          "caption": "kinetic-message-handler"
+        }
+      ],
+      "id": "CreatePacks",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "trigger": {
+        "hook": "onClick",
+        "type": "Control",
+        "target": "CreateShipmentsButton"
+      },
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svcPath": "CreateMasterPack",
+            "options": {
+              "efxLibrary": "Ship-Mandata"
+            },
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "requestParamArgs": [
+                {
+                  "paramPath": "input",
+                  "viewName": "MasterPacking",
+                  "methodParamModifier": "SendAllRows"
+                }
+              ]
+            }
+          },
+          "caption": "rest-kinetic"
+        },
+        {
+          "type": "erp-message-handler",
+          "param": {
+            "type": "Slideout",
+            "level": "info",
+            "message": "{actionResult.Result}",
+            "buttons": "ok",
+            "result": "Ok",
+            "title": "Master Pack Creation Message"
+          },
+          "option": {},
+          "caption": "kinetic-message-handler"
+        },
+        {
+          "type": "erp-baq",
+          "caption": "kinetic-baq",
+          "mode": "get",
+          "baqId": "Ship_MasterPacking",
+          "executeOptions": {},
+          "alias": "MasterPacking"
+        }
+      ],
+      "id": "CreateMasterPacksButton_onClick",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "id": "MasterPacking_Get",
+      "description": "Get data for BAQ data view:MasterPacking",
+      "customizable": true,
+      "openDesigner": true,
+      "actions": [
+        {
+          "mode": "get",
+          "alias": "MasterPacking",
+          "baqId": "Ship_MasterPacking",
+          "title": "Get data for BAQ data view:MasterPacking",
+          "type": "erp-baq"
+        }
+      ]
+    }
+  ]
+}

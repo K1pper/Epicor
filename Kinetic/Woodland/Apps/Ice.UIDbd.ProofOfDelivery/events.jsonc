@@ -1,0 +1,85 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v5.0/events.json",
+  "contentVersion": "5.0",
+  "imports": [],
+  "events": [
+    {
+      "id": "window",
+      "trigger": {
+        "type": "Window",
+        "hook": "onLoad"
+      },
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "executeRefreshAll"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "executeRefreshAll",
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "refresh_POD"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh_POD",
+      "actions": [
+        {
+          "type": "property-set",
+          "param": {
+            "component": "7277ceaf-f63e-46e7-8901-650b0430d340",
+            "props": [
+              {
+                "prop": "invalidated",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refreshAll",
+      "trigger": {
+        "type": "Control",
+        "target": "refreshAll",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "executeRefreshAll"
+        }
+      ]
+    },
+    {
+      "id": "window_events",
+      "trigger": {
+        "type": "Event",
+        "hook": "after",
+        "target": "window"
+      },
+      "actions": []
+    }
+  ]
+}

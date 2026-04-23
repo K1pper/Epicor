@@ -1,0 +1,64 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v4.0/dataviews.json",
+  "contentVersion": "4.0",
+  "imports": [],
+  "dataviews": [
+    {
+      "id": "Collections",
+      "data": "Ship_Collection",
+      "name": "Collections",
+      "staticFilter": "",
+      "table": "Collections",
+      "additionalColumns": [
+        {
+          "columnName": "UD101_Number02",
+          "caption": "Customer",
+          "format": ">>>>>>>>>>9.999999999"
+        },
+        {
+          "columnName": "UD101_ShortChar02",
+          "caption": "Ship Via",
+          "format": "x(50)"
+        }
+      ],
+      "confirmChanges": false,
+      "customizable": true,
+      "isSystemView": false,
+      "schema": "baq"
+    },
+    {
+      "datasetId": "UD101",
+      "schema": "Ice",
+      "serverDataset": "UD101",
+      "serverTable": "UD101A",
+      "tableId": "UD101A",
+      "viewId": "UD101A",
+      "id": "UD101A",
+      "confirmChanges": false,
+      "isSystemView": false,
+      "table": "UD101A",
+      "name": "UD101A",
+      "staticFilter": "",
+      "openDesigner": true,
+      "bridgeId": "dv_BO-7a7a80"
+    },
+    {
+      "id": "TransView",
+      "schema": "Erp",
+      "customizable": true,
+      "additionalColumns": [
+        {
+          "columnName": "SelectAddPallets",
+          "caption": "SelectAddPallets",
+          "datatype": "boolean"
+        },
+        {
+          "columnName": "Company",
+          "caption": "Company",
+          "datatype": "string"
+        }
+      ],
+      "confirmChanges": false
+    }
+  ]
+}

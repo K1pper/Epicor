@@ -1,0 +1,25 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v4.0/dataviews.json",
+  "contentVersion": "4.0",
+  "imports": [],
+  "dataviews": [
+    {
+      "id": "POD",
+      "data": "Ship-ProofOfDelivery",
+      "name": "POD",
+      "parent": {
+        "parentDvId": "",
+        "parentDataview": "",
+        "parentColumns": [],
+        "childColumns": []
+      },
+      "staticFilter": "",
+      "table": "Ship-ProofOfDelivery",
+      "additionalColumns": [],
+      "confirmChanges": true,
+      "customizable": true,
+      "isSystemView": false,
+      "schema": "baq"
+    }
+  ]
+}

@@ -1,0 +1,713 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v3.0/layout.json",
+  "contentVersion": "3.0",
+  "layout": {
+    "name": "ShipmentCollection",
+    "guid": "2dcd1674-5e34-4d98-b493-c75747027376",
+    "namespace": "Ice.UIDbd.Template",
+    "caption": "Shipment Collection and Delivery",
+    "viewType": "Dashboard",
+    "components": [
+      {
+        "parentId": null,
+        "id": "dv-d84b2f-grid-0",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "id": "dv-d84b2f-grid-0",
+          "guid": "afc95996-6209-4226-a3c5-7a661222b71f",
+          "title": "Collections",
+          "expanded": true,
+          "autoFillContainer": false,
+          "gridModel": {
+            "height": 350,
+            "scrollable": "virtual",
+            "pageSize": 100,
+            "sortable": true,
+            "resizable": true,
+            "editable": true,
+            "disablePasteUpdate": false,
+            "disablePasteNew": false,
+            "columns": [
+              {
+                "field": "UD101_Number01",
+                "title": "Shipment Number",
+                "hidden": false,
+                "editable": false,
+                "erpEditorModel": {},
+                "erpEditor": "number",
+                "width": 150
+              },
+              {
+                "field": "Customer_CustID",
+                "title": "Cust ID",
+                "width": 80
+              },
+              {
+                "field": "Customer_Name",
+                "title": "Name",
+                "width": 200
+              },
+              {
+                "field": "ShipTo_Name",
+                "title": "Ship To",
+                "width": 150
+              },
+              {
+                "field": "UD101_ShortChar02",
+                "title": "Ship Via",
+                "erpEditor": "combo",
+                "erpEditorModel": {
+                  "svc": "Erp.BO.ShipViaSvc",
+                  "svcPath": "GetRows",
+                  "tableName": "ShipVia",
+                  "dataMode": "list",
+                  "textField": "Description",
+                  "valueField": "ShipViaCode"
+                },
+                "width": 100
+              },
+              {
+                "field": "UD101_CheckBox01",
+                "title": "Request Collection",
+                "width": 130
+              },
+              {
+                "field": "UD101_Date02",
+                "title": "Request Date",
+                "width": 100
+              },
+              {
+                "field": "UD101_ShortChar04",
+                "title": "Request Time",
+                "erpEditor": "combo",
+                "erpEditorModel": {
+                  "svc": "Ice.BO.UserCodesSvc",
+                  "svcPath": "GetRows",
+                  "tableName": "UDCodes",
+                  "filters": [
+                    "CodeTypeID='CollTimes'"
+                  ],
+                  "dataMode": "list",
+                  "textField": "CodeDesc",
+                  "valueField": "CodeID"
+                },
+                "width": 100
+              },
+              {
+                "field": "UD101_CheckBox02",
+                "title": "Collected",
+                "width": 80
+              },
+              {
+                "field": "UD101_CheckBox03",
+                "title": "Delivered",
+                "width": 80
+              },
+              {
+                "field": "UD101_ShortChar05",
+                "title": "Job Number",
+                "width": 100
+              },
+              {
+                "field": "UDCodes1_CodeDesc",
+                "title": "Status",
+                "width": 120
+              },
+              {
+                "field": "UD101_Character03",
+                "title": "Sync Message"
+              },
+              {
+                "field": "ShipTo_ShipToNum",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_Address1",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_Address2",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_Address3",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_City",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_State",
+                "hidden": true
+              },
+              {
+                "field": "ShipTo_ZIP",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Key1",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Key2",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Key3",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Key4",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Key5",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Company",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Date04",
+                "title": "Expected Delivery"
+              },
+              {
+                "field": "UD101_Date03",
+                "title": "Collection Date",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Date05",
+                "title": "Act Delivery Date",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Number02",
+                "title": "CustNum",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Number03",
+                "title": "Lat",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Number04",
+                "title": "Long",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar01",
+                "title": "Status",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar03",
+                "title": "ShipToNum",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar06",
+                "title": "Received By",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar07",
+                "title": "PalletNum",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Character02",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Character01",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Date01",
+                "hidden": true
+              }
+            ],
+            "id": "grdLandingPage",
+            "providerModel": {
+              "description": "Grid_Collections: Summary",
+              "isDefault": true,
+              "serverPaging": true,
+              "epBinding": "Collections",
+              "baqId": "Ship_Collection",
+              "autoRefreshOnLoad": true,
+              "baqOptions": {}
+            },
+            "epBinding": "Collections",
+            "selectorColumn": false
+          },
+          "actionData": [
+            {
+              "id": "btn_Update_Collections",
+              "description": "Update",
+              "icon": "mdi mdi-content-save",
+              "showInToolBar": true
+            }
+          ]
+        }
+      },
+      {
+        "parentId": null,
+        "id": "UD101A-grid-1",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "id": "UD101A-grid-1",
+          "guid": "9848ad10-f263-4578-9b36-a583e7953364",
+          "title": "Pallets",
+          "expanded": true,
+          "autoFillContainer": false,
+          "gridModel": {
+            "sortable": true,
+            "resizable": true,
+            "editable": true,
+            "disablePasteUpdate": false,
+            "disablePasteNew": false,
+            "columns": [
+              {
+                "field": "ShortChar01",
+                "title": "Pallet",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "ChildKey1",
+                "title": "Pack Number"
+              }
+            ],
+            "epBinding": "UD101A",
+            "id": "grdLandingPage",
+            "providerModel": {}
+          },
+          "actionData": [
+            {
+              "id": "btn_UpdatePallets",
+              "description": "Update",
+              "icon": "mdi mdi-content-save",
+              "epBinding": "TransView.SelectAddPallets",
+              "showInToolBar": true
+            },
+            {
+              "id": "btn_Delete_Pallet",
+              "description": "Delete",
+              "icon": "mdi mdi-minus-circle-outline",
+              "showInToolBar": true
+            },
+            {
+              "id": "btn_Add_Pallet",
+              "description": "Add",
+              "icon": "mdi mdi-plus-circle-outline",
+              "showInToolBar": false
+            }
+          ],
+          "copyOptionsDisabled": false
+        }
+      },
+      {
+        "id": "95d922d5-4956-4ff1-b321-1a5980a95086",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "95d922d5-4956-4ff1-b321-1a5980a95086",
+          "labelText": "Customer ID",
+          "id": "erp-text-box-95d92",
+          "epBinding": "Collections.Customer_CustID",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "c89c4d69-14cf-4374-b5be-dc62dd947178",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "c89c4d69-14cf-4374-b5be-dc62dd947178",
+          "labelText": "Customer Name",
+          "id": "erp-text-box-c89c4",
+          "epBinding": "Collections.Customer_Name",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "80a5b763-28af-4b92-a37c-f87a8b7c61fd",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "80a5b763-28af-4b92-a37c-f87a8b7c61fd",
+          "labelText": "Ship To Name",
+          "id": "erp-text-box-80a5b",
+          "epBinding": "Collections.ShipTo_Name",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "aae3c752-511d-4b03-8e5a-528cdc363201",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "aae3c752-511d-4b03-8e5a-528cdc363201",
+          "labelText": "Ship To Number",
+          "id": "erp-text-box-aae3c",
+          "epBinding": "Collections.ShipTo_ShipToNum",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "ec64f49d-c0b1-4b1c-9929-43e03c4aa373",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "ec64f49d-c0b1-4b1c-9929-43e03c4aa373",
+          "id": "erp-text-box-ec64f",
+          "epBinding": "Collections.ShipTo_Address1",
+          "readonly": true,
+          "labelText": "Address"
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "c49716b7-5d4d-4502-a8c0-db33a2c30c27",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "c49716b7-5d4d-4502-a8c0-db33a2c30c27",
+          "id": "erp-text-box-c4971",
+          "epBinding": "Collections.ShipTo_Address2",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "e813061d-71fa-4b66-a908-4f783e78500a",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "e813061d-71fa-4b66-a908-4f783e78500a",
+          "id": "erp-text-box-e8130",
+          "epBinding": "Collections.ShipTo_Address3",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "867fbb41-7e56-4d92-a318-4c363701879c",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "867fbb41-7e56-4d92-a318-4c363701879c",
+          "id": "erp-text-box-867fb",
+          "epBinding": "Collections.ShipTo_City",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "b056446e-e377-4277-8739-749eec6eab0c",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "b056446e-e377-4277-8739-749eec6eab0c",
+          "id": "erp-text-box-b0564",
+          "epBinding": "Collections.ShipTo_State",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "d6549fc8-6eea-4d58-a074-74ee604aef29",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "d6549fc8-6eea-4d58-a074-74ee604aef29",
+          "id": "erp-text-box-d6549",
+          "epBinding": "Collections.ShipTo_ZIP",
+          "readonly": true
+        },
+        "parentId": "6d65caef-38cc-4dbf-8d73-ff86029df72f"
+      },
+      {
+        "id": "6d65caef-38cc-4dbf-8d73-ff86029df72f",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "6d65caef-38cc-4dbf-8d73-ff86029df72f",
+          "flexBasis": "50%",
+          "id": "div-col-6d65c"
+        },
+        "parentId": "550c6c54-2c25-43dd-9ff0-ffca3e86f322"
+      },
+      {
+        "id": "8bade693-6e60-4fae-93f4-72106bbc30a5",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "8bade693-6e60-4fae-93f4-72106bbc30a5",
+          "labelText": "Request Collection",
+          "id": "erp-check-box-8bade",
+          "epBinding": "Collections.UD101_CheckBox01"
+        },
+        "parentId": "0b1aea43-d309-4a82-8ea9-cab451b5d64c"
+      },
+      {
+        "id": "0b1aea43-d309-4a82-8ea9-cab451b5d64c",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "0b1aea43-d309-4a82-8ea9-cab451b5d64c",
+          "flexBasis": "50%",
+          "id": "div-col-0b1ae"
+        },
+        "parentId": "1ead067f-b645-41d5-8a36-ecc20042f915"
+      },
+      {
+        "id": "370c80a9-d6a6-4de9-a9b4-6bd3b8827a8a",
+        "sourceTypeId": "erp-date-picker",
+        "model": {
+          "guid": "370c80a9-d6a6-4de9-a9b4-6bd3b8827a8a",
+          "labelText": "Required Collection Date",
+          "id": "erp-date-picker-370c8",
+          "epBinding": "Collections.UD101_Date02"
+        },
+        "parentId": "29f1e268-74d4-48fb-a8c5-1a6547f8e1fd"
+      },
+      {
+        "id": "29f1e268-74d4-48fb-a8c5-1a6547f8e1fd",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "29f1e268-74d4-48fb-a8c5-1a6547f8e1fd",
+          "flexBasis": "50%",
+          "id": "div-col-29f1e"
+        },
+        "parentId": "1ead067f-b645-41d5-8a36-ecc20042f915"
+      },
+      {
+        "id": "1ead067f-b645-41d5-8a36-ecc20042f915",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "1ead067f-b645-41d5-8a36-ecc20042f915",
+          "id": "div-row-1ead0"
+        },
+        "parentId": "f648865c-340f-43c6-9612-950f859a10d0"
+      },
+      {
+        "id": "1d12bc69-daa6-414d-ace3-95a2951ffc5f",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "1d12bc69-daa6-414d-ace3-95a2951ffc5f",
+          "flexBasis": "50%",
+          "id": "div-col-1d12b"
+        },
+        "parentId": "c70b33b7-792d-434f-ab16-05adf7d7bd84"
+      },
+      {
+        "id": "451e0b3b-5ed8-4240-b497-4851e2f73289",
+        "sourceTypeId": "erp-combo-box",
+        "model": {
+          "guid": "451e0b3b-5ed8-4240-b497-4851e2f73289",
+          "labelText": "Required Collection Time",
+          "id": "erp-combo-box-451e0",
+          "epBinding": "Collections.UD101_ShortChar04",
+          "filtersParams": [
+            "CodeTypeParam=CollTimes"
+          ],
+          "appDesignerComboType": "../shared/combo/UserCodes.UserCodesCombo/default/combo.jsonc#/combo",
+          "$ref": "../shared/combo/UserCodes.UserCodesCombo/default/combo.jsonc#/combo"
+        },
+        "parentId": "a2da18f1-de8a-4e7f-9806-4898471c97f0"
+      },
+      {
+        "id": "a2da18f1-de8a-4e7f-9806-4898471c97f0",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "a2da18f1-de8a-4e7f-9806-4898471c97f0",
+          "flexBasis": "50%",
+          "id": "div-col-a2da1"
+        },
+        "parentId": "c70b33b7-792d-434f-ab16-05adf7d7bd84"
+      },
+      {
+        "id": "c70b33b7-792d-434f-ab16-05adf7d7bd84",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "c70b33b7-792d-434f-ab16-05adf7d7bd84",
+          "id": "div-row-c70b3"
+        },
+        "parentId": "f648865c-340f-43c6-9612-950f859a10d0"
+      },
+      {
+        "id": "c642f0a1-3930-4542-96ee-92a999a08ce0",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "c642f0a1-3930-4542-96ee-92a999a08ce0",
+          "labelText": "Collected",
+          "id": "erp-check-box-c642f",
+          "epBinding": "Collections.UD101_CheckBox02",
+          "readonly": false
+        },
+        "parentId": "50f55618-7c03-4c29-91c9-d6afda0df502"
+      },
+      {
+        "id": "50f55618-7c03-4c29-91c9-d6afda0df502",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "50f55618-7c03-4c29-91c9-d6afda0df502",
+          "flexBasis": "50%",
+          "id": "div-col-50f55"
+        },
+        "parentId": "eea52ef2-17ca-4458-b231-a1cec09bf516"
+      },
+      {
+        "id": "a4feae6f-0629-4a0f-9e4a-a72bdfdb7058",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "a4feae6f-0629-4a0f-9e4a-a72bdfdb7058",
+          "labelText": "Actual  Collection Time",
+          "id": "erp-text-box-a4fea",
+          "readonly": true,
+          "epBinding": "Collections.UD101_ShortChar07"
+        },
+        "parentId": "0065cd41-8147-4ad5-9677-49c5de05ea98"
+      },
+      {
+        "id": "0065cd41-8147-4ad5-9677-49c5de05ea98",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "0065cd41-8147-4ad5-9677-49c5de05ea98",
+          "flexBasis": "50%",
+          "id": "div-col-0065c"
+        },
+        "parentId": "eea52ef2-17ca-4458-b231-a1cec09bf516"
+      },
+      {
+        "id": "eea52ef2-17ca-4458-b231-a1cec09bf516",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "eea52ef2-17ca-4458-b231-a1cec09bf516",
+          "id": "div-row-eea52"
+        },
+        "parentId": "f648865c-340f-43c6-9612-950f859a10d0"
+      },
+      {
+        "id": "bd606f0b-b044-45c8-b329-ccc5d8bd712b",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "bd606f0b-b044-45c8-b329-ccc5d8bd712b",
+          "labelText": "Delivered",
+          "id": "erp-check-box-bd606",
+          "epBinding": "Collections.UD101_CheckBox03"
+        },
+        "parentId": "b21fa814-a932-477e-8485-c99c4e9633d5"
+      },
+      {
+        "id": "b21fa814-a932-477e-8485-c99c4e9633d5",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "b21fa814-a932-477e-8485-c99c4e9633d5",
+          "flexBasis": "50%",
+          "id": "div-col-b21fa"
+        },
+        "parentId": "c85ef8e7-aa50-42b1-8714-e8c9731ea34e"
+      },
+      {
+        "id": "e13cb8dc-30e0-49ad-99e8-d730c9b0b8d6",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "e13cb8dc-30e0-49ad-99e8-d730c9b0b8d6",
+          "labelText": "Actual Delivery Time",
+          "id": "erp-text-box-e13cb",
+          "readonly": true,
+          "epBinding": "Collections.UD101_ShortChar08"
+        },
+        "parentId": "c7ff334a-4dd4-4a51-9d1b-8c0af42eb6c7"
+      },
+      {
+        "id": "c7ff334a-4dd4-4a51-9d1b-8c0af42eb6c7",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "c7ff334a-4dd4-4a51-9d1b-8c0af42eb6c7",
+          "flexBasis": "50%",
+          "id": "div-col-c7ff3"
+        },
+        "parentId": "c85ef8e7-aa50-42b1-8714-e8c9731ea34e"
+      },
+      {
+        "id": "c85ef8e7-aa50-42b1-8714-e8c9731ea34e",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "c85ef8e7-aa50-42b1-8714-e8c9731ea34e",
+          "id": "div-row-c85ef"
+        },
+        "parentId": "f648865c-340f-43c6-9612-950f859a10d0"
+      },
+      {
+        "id": "f648865c-340f-43c6-9612-950f859a10d0",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "f648865c-340f-43c6-9612-950f859a10d0",
+          "flexBasis": "50%",
+          "id": "div-col-f6488"
+        },
+        "parentId": "550c6c54-2c25-43dd-9ff0-ffca3e86f322"
+      },
+      {
+        "id": "550c6c54-2c25-43dd-9ff0-ffca3e86f322",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "550c6c54-2c25-43dd-9ff0-ffca3e86f322",
+          "id": "div-row-550c6"
+        },
+        "parentId": "ad07f13a-8d69-4d49-9cdb-6300bd936305"
+      },
+      {
+        "id": "ad07f13a-8d69-4d49-9cdb-6300bd936305",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "ad07f13a-8d69-4d49-9cdb-6300bd936305",
+          "flexBasis": "100%",
+          "id": "div-col-ad07f"
+        },
+        "parentId": "d54d8b88-f253-4ee4-9f19-0a50e8c14a01"
+      },
+      {
+        "id": "d54d8b88-f253-4ee4-9f19-0a50e8c14a01",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "d54d8b88-f253-4ee4-9f19-0a50e8c14a01",
+          "columns": 1,
+          "id": "div-row-d54d8"
+        },
+        "parentId": "dv-d84b2f-card-0#bodyComponents"
+      },
+      {
+        "parentId": null,
+        "id": "dv-d84b2f-card-0",
+        "sourceTypeId": "metafx-panel-card",
+        "model": {
+          "id": "dv-d84b2f-card-0",
+          "class": "PanelCard",
+          "guid": "3fdce1cc-85b4-45cc-ac3b-dbfd911a5b44",
+          "disabledToolBar": false,
+          "highLightPanelBar": true,
+          "title": "Details",
+          "expandMore": false,
+          "enableActionButton": false,
+          "footer": {},
+          "bodyComponents": []
+        },
+        "layoutData": {
+          "flexLayout": true,
+          "hostId": "ShipmentCollection"
+        }
+      }
+    ],
+    "pageType": "Responsive",
+    "navigation": {
+      "pageCaption": "",
+      "tabId": "",
+      "enable": false,
+      "parentPage": null,
+      "epBinding": "",
+      "epBindingLevel": 0,
+      "epBindingPeerOrder": 0,
+      "dataSetId": "%datasetId%"
+    },
+    "width": 1440
+  }
+}

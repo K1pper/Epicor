@@ -1,44 +1,46 @@
-try
+if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
 {
-    var settings = this.ThisLib.GetSettings();
-    BaseURL = settings.BaseURL;
-
-    using (var client = new HttpClient())
+    try
     {
-        using (var request = new HttpRequestMessage(HttpMethod.Post, settings.BaseURL + "/auth"))
+        var settings = this.ThisLib.GetSettings();
+        BaseURL = settings.BaseURL;
+        Account = settings.Account;
+        LastPollDate = settings.LastPollDate;
+        MapKey = settings.MapKey;
+
+        using (var client = new HttpClient())
         {
-            request.Headers.Add("Accept", "application/json");
-
-            var data = new
+            using (var request = new HttpRequestMessage(HttpMethod.Post, settings.BaseURL + "/auth"))
             {
-                userName = settings.UserName,
-                password = settings.Password,
-                companyCode = settings.Company,
-                depot = settings.Depot
-            };
+                request.Headers.Add("Accept", "application/json");
 
-            var payload = JsonConvert.SerializeObject(data);
-            var content = new StringContent(payload, null, "application/json");
-            request.Content = content;
+                var data = new
+                {
+                    userName = settings.UserName,
+                    password = settings.Password,
+                    companyCode = settings.Company,
+                    depot = settings.Depot
+                };
 
-            var response = client.SendAsync(request).Result;
+                var payload = JsonConvert.SerializeObject(data);
+                var content = new StringContent(payload, null, "application/json");
+                request.Content = content;
 
-            var result = response.Content.ReadAsStringAsync().Result;
+                var response = client.SendAsync(request).Result;
 
-            Ice.Diagnostics.Log.WriteEntry(result);
+                var result = response.Content.ReadAsStringAsync().Result;
 
-            if (response.IsSuccessStatusCode)
-            {
+                if (response.IsSuccessStatusCode)
+                {
 
-                dynamic d = JsonConvert.DeserializeObject(result);
-                token = d.token;
-
-                Ice.Diagnostics.Log.WriteEntry(token);
+                    dynamic d = JsonConvert.DeserializeObject(result);
+                    token = d.token;
+                }
             }
         }
     }
-}
-catch (Exception ex)
-{
-    Ice.Diagnostics.Log.WriteEntry("Ship Authentication Exception: " + ex.Message);
+    catch (Exception ex)
+    {
+        Ice.Diagnostics.Log.WriteEntry("Ship Authentication Exception: " + ex.Message);
+    }
 }

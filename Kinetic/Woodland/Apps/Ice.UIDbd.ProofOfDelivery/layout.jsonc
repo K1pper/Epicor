@@ -1,0 +1,652 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v3.0/layout.json",
+  "contentVersion": "3.0",
+  "layout": {
+    "name": "ProofOfDelivery",
+    "guid": "2dcd1674-5e34-4d98-b493-c75747027376",
+    "namespace": "Ice.UIDbd.Template",
+    "caption": "Proof Of Delivery",
+    "viewType": "Dashboard",
+    "components": [
+      {
+        "parentId": null,
+        "id": "dv-38e518-grid-0",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "id": "dv-38e518-grid-0",
+          "guid": "7277ceaf-f63e-46e7-8901-650b0430d340",
+          "title": "List",
+          "expanded": true,
+          "autoFillContainer": false,
+          "gridModel": {
+            "height": 350,
+            "scrollable": "virtual",
+            "pageSize": 100,
+            "sortable": true,
+            "resizable": true,
+            "editable": true,
+            "disablePasteUpdate": true,
+            "disablePasteNew": true,
+            "columns": [
+              {
+                "field": "UD101_Key1",
+                "title": "Shipment Number",
+                "erpEditorModel": {}
+              },
+              {
+                "field": "UD101_ShortChar05",
+                "title": "Job Number"
+              },
+              {
+                "field": "UDCodes1_CodeDesc",
+                "title": "Status"
+              },
+              {
+                "field": "UD101_Character03",
+                "title": "Sync Message"
+              },
+              {
+                "field": "Customer_CustID",
+                "title": "Cust. ID"
+              },
+              {
+                "field": "Customer_Name",
+                "title": "Name"
+              },
+              {
+                "field": "ShipTo_ShipToNum",
+                "title": "Ship To"
+              },
+              {
+                "field": "ShipTo_Name",
+                "title": "Ship To Name"
+              },
+              {
+                "field": "UD101_CheckBox01",
+                "title": "Collection Requested",
+                "hidden": true
+              },
+              {
+                "field": "Calculated_CollectionRequestedDate",
+                "title": "Collection Requested Date",
+                "hidden": true
+              },
+              {
+                "field": "UD101_Date04",
+                "title": "Delivery Date",
+                "hidden": true
+              },
+              {
+                "field": "UD101_CheckBox02",
+                "title": "Collected",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar07",
+                "title": "Collection Date",
+                "hidden": true
+              },
+              {
+                "field": "UD101_CheckBox03",
+                "title": "Delivered",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar08",
+                "title": "Actual Delivery Date",
+                "hidden": true
+              },
+              {
+                "field": "Calculated_Signature",
+                "title": "Signature",
+                "hidden": true
+              },
+              {
+                "field": "Calculated_Map",
+                "title": "Map",
+                "hidden": true
+              },
+              {
+                "field": "UD101_ShortChar06",
+                "title": "Received By",
+                "hidden": true
+              }
+            ],
+            "id": "grdLandingPage",
+            "providerModel": {
+              "description": "Grid_POD: Summary",
+              "isDefault": true,
+              "serverPaging": true,
+              "epBinding": "POD",
+              "baqId": "Ship-ProofOfDelivery",
+              "autoRefreshOnLoad": true,
+              "baqOptions": {}
+            }
+          }
+        },
+        "layoutData": {
+          "flexLayout": true,
+          "hostId": "ProofOfDelivery"
+        }
+      },
+      {
+        "id": "98407fce-a30e-4bef-a61e-29e1c3f1f29a",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "98407fce-a30e-4bef-a61e-29e1c3f1f29a",
+          "labelText": "Shipment",
+          "id": "erp-text-box-98407",
+          "epBinding": "POD.UD101_Number01"
+        },
+        "parentId": "0fa3ff79-7ba1-4cc8-b543-c67766098b83"
+      },
+      {
+        "id": "0fa3ff79-7ba1-4cc8-b543-c67766098b83",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "0fa3ff79-7ba1-4cc8-b543-c67766098b83",
+          "flexBasis": "50%",
+          "id": "div-col-0fa3f"
+        },
+        "parentId": "b7139df6-7fdf-40de-95ec-de909bb1b12a"
+      },
+      {
+        "id": "136ee5dd-86df-4d66-bc7e-567ed8b69479",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "136ee5dd-86df-4d66-bc7e-567ed8b69479",
+          "labelText": "Job Number",
+          "id": "erp-text-box-136ee",
+          "epBinding": "POD.UD101_ShortChar05"
+        },
+        "parentId": "24fe8b9e-c9b2-4237-9a3d-9d8e0ab0de79"
+      },
+      {
+        "id": "24fe8b9e-c9b2-4237-9a3d-9d8e0ab0de79",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "24fe8b9e-c9b2-4237-9a3d-9d8e0ab0de79",
+          "flexBasis": "50%",
+          "id": "div-col-24fe8"
+        },
+        "parentId": "b7139df6-7fdf-40de-95ec-de909bb1b12a"
+      },
+      {
+        "id": "b7139df6-7fdf-40de-95ec-de909bb1b12a",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "b7139df6-7fdf-40de-95ec-de909bb1b12a",
+          "id": "div-row-b7139"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "0e10848f-d66e-4cdb-917e-3c8eada87df9",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "0e10848f-d66e-4cdb-917e-3c8eada87df9",
+          "labelText": "Customer Number",
+          "id": "erp-text-box-0e108",
+          "epBinding": "POD.Customer_CustID"
+        },
+        "parentId": "664ab052-a0c1-4aac-aec6-4693073b22c9"
+      },
+      {
+        "id": "664ab052-a0c1-4aac-aec6-4693073b22c9",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "664ab052-a0c1-4aac-aec6-4693073b22c9",
+          "flexBasis": "50%",
+          "id": "div-col-664ab"
+        },
+        "parentId": "043ea070-eb87-4586-a75b-267a942165d3"
+      },
+      {
+        "id": "81d9d906-c646-41e7-b8c1-633d46f1f968",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "81d9d906-c646-41e7-b8c1-633d46f1f968",
+          "labelText": "Ship To Number",
+          "id": "erp-text-box-81d9d",
+          "epBinding": "POD.ShipTo_ShipToNum"
+        },
+        "parentId": "727e090a-9706-4a77-b712-99aff7f38df8"
+      },
+      {
+        "id": "727e090a-9706-4a77-b712-99aff7f38df8",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "727e090a-9706-4a77-b712-99aff7f38df8",
+          "flexBasis": "50%",
+          "id": "div-col-727e0"
+        },
+        "parentId": "043ea070-eb87-4586-a75b-267a942165d3"
+      },
+      {
+        "id": "043ea070-eb87-4586-a75b-267a942165d3",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "043ea070-eb87-4586-a75b-267a942165d3",
+          "id": "div-row-043ea"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "0b5ce0b7-684e-4b73-a007-a3d01037c98c",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "0b5ce0b7-684e-4b73-a007-a3d01037c98c",
+          "labelText": "Customer Name",
+          "id": "erp-text-box-0b5ce",
+          "epBinding": "POD.Customer_Name"
+        },
+        "parentId": "86c14fce-25ab-4e12-83df-a0311dd29ec9"
+      },
+      {
+        "id": "86c14fce-25ab-4e12-83df-a0311dd29ec9",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "86c14fce-25ab-4e12-83df-a0311dd29ec9",
+          "flexBasis": "50%",
+          "id": "div-col-86c14"
+        },
+        "parentId": "0f6ed61f-43f0-4dd6-8d1e-8ca748a6d973"
+      },
+      {
+        "id": "2ec7385e-f05f-437a-a15c-85f2fe285861",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "2ec7385e-f05f-437a-a15c-85f2fe285861",
+          "labelText": "Ship To Name",
+          "id": "erp-text-box-2ec73",
+          "epBinding": "POD.ShipTo_Name"
+        },
+        "parentId": "b0fbec1e-729c-4c25-8fbb-a960ace4bffd"
+      },
+      {
+        "id": "b0fbec1e-729c-4c25-8fbb-a960ace4bffd",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "b0fbec1e-729c-4c25-8fbb-a960ace4bffd",
+          "flexBasis": "50%",
+          "id": "div-col-b0fbe"
+        },
+        "parentId": "0f6ed61f-43f0-4dd6-8d1e-8ca748a6d973"
+      },
+      {
+        "id": "0f6ed61f-43f0-4dd6-8d1e-8ca748a6d973",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "0f6ed61f-43f0-4dd6-8d1e-8ca748a6d973",
+          "id": "div-row-0f6ed"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "1902615e-74ce-474d-93fb-9facac6d7a54",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "1902615e-74ce-474d-93fb-9facac6d7a54",
+          "labelText": "Status",
+          "id": "erp-text-box-19026",
+          "epBinding": "POD.UD101_ShortChar01"
+        },
+        "parentId": "10acd0df-c667-44ec-9c8f-89d80047a068"
+      },
+      {
+        "id": "10acd0df-c667-44ec-9c8f-89d80047a068",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "10acd0df-c667-44ec-9c8f-89d80047a068",
+          "flexBasis": "50%",
+          "id": "div-col-10acd"
+        },
+        "parentId": "cb2ab25b-2823-4cf3-bb93-9b1d170dd765"
+      },
+      {
+        "id": "bcfb652b-16f0-485d-8d00-24cd419ec897",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "bcfb652b-16f0-485d-8d00-24cd419ec897",
+          "labelText": "Sync Message",
+          "id": "erp-text-box-bcfb6",
+          "epBinding": "POD.UD101_Character03"
+        },
+        "parentId": "43743af7-4337-4bce-acef-64c0de8bf459"
+      },
+      {
+        "id": "43743af7-4337-4bce-acef-64c0de8bf459",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "43743af7-4337-4bce-acef-64c0de8bf459",
+          "flexBasis": "50%",
+          "id": "div-col-43743"
+        },
+        "parentId": "cb2ab25b-2823-4cf3-bb93-9b1d170dd765"
+      },
+      {
+        "id": "cb2ab25b-2823-4cf3-bb93-9b1d170dd765",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "cb2ab25b-2823-4cf3-bb93-9b1d170dd765",
+          "id": "div-row-cb2ab"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "cf60c77b-9b30-41e1-bcf8-c0316bac21c1",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "cf60c77b-9b30-41e1-bcf8-c0316bac21c1",
+          "labelText": "Collection Requested",
+          "id": "erp-check-box-cf60c",
+          "epBinding": "POD.UD101_CheckBox01"
+        },
+        "parentId": "a2fabec6-33fd-4195-a6f0-3fce653fc922"
+      },
+      {
+        "id": "a2fabec6-33fd-4195-a6f0-3fce653fc922",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "a2fabec6-33fd-4195-a6f0-3fce653fc922",
+          "flexBasis": "50%",
+          "id": "div-col-a2fab"
+        },
+        "parentId": "4a834d71-6ad6-49b9-9d0d-b050a1d1b31d"
+      },
+      {
+        "id": "9054c547-36f4-44e4-b1c2-1b658de8d2eb",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "9054c547-36f4-44e4-b1c2-1b658de8d2eb",
+          "labelText": "Collected",
+          "id": "erp-check-box-9054c",
+          "epBinding": "POD.UD101_CheckBox02"
+        },
+        "parentId": "9c8b5fe0-c2e4-47bf-968c-1e0b8baad42c"
+      },
+      {
+        "id": "9c8b5fe0-c2e4-47bf-968c-1e0b8baad42c",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "9c8b5fe0-c2e4-47bf-968c-1e0b8baad42c",
+          "flexBasis": "50%",
+          "id": "div-col-9c8b5"
+        },
+        "parentId": "4a834d71-6ad6-49b9-9d0d-b050a1d1b31d"
+      },
+      {
+        "id": "4a834d71-6ad6-49b9-9d0d-b050a1d1b31d",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "4a834d71-6ad6-49b9-9d0d-b050a1d1b31d",
+          "id": "div-row-4a834"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "59131630-d8d7-4022-9037-176b3bef72f2",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "59131630-d8d7-4022-9037-176b3bef72f2",
+          "labelText": "Requested Collection Date",
+          "id": "erp-text-box-59131",
+          "epBinding": "POD.Calculated_CollectionRequestedDate"
+        },
+        "parentId": "f0ef076d-53c4-4f1e-8056-6cb445fb2969"
+      },
+      {
+        "id": "f0ef076d-53c4-4f1e-8056-6cb445fb2969",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "f0ef076d-53c4-4f1e-8056-6cb445fb2969",
+          "flexBasis": "50%",
+          "id": "div-col-f0ef0"
+        },
+        "parentId": "fb1a4d22-c8d5-4361-9e7b-93cd5bcec3ab"
+      },
+      {
+        "id": "80351994-520d-4fad-a951-84c4f6f09d90",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "80351994-520d-4fad-a951-84c4f6f09d90",
+          "labelText": "Collected On",
+          "id": "erp-text-box-80351",
+          "epBinding": "POD.UD101_ShortChar07"
+        },
+        "parentId": "eb896e8c-eb2f-40ab-a8b4-f1dea0ffd280"
+      },
+      {
+        "id": "eb896e8c-eb2f-40ab-a8b4-f1dea0ffd280",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "eb896e8c-eb2f-40ab-a8b4-f1dea0ffd280",
+          "flexBasis": "50%",
+          "id": "div-col-eb896"
+        },
+        "parentId": "fb1a4d22-c8d5-4361-9e7b-93cd5bcec3ab"
+      },
+      {
+        "id": "fb1a4d22-c8d5-4361-9e7b-93cd5bcec3ab",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "fb1a4d22-c8d5-4361-9e7b-93cd5bcec3ab",
+          "id": "div-row-fb1a4"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "c887f938-0910-4374-b0d1-d3810cb2bf7a",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "c887f938-0910-4374-b0d1-d3810cb2bf7a",
+          "labelText": "Requested Delivery Date",
+          "id": "erp-text-box-c887f",
+          "epBinding": "POD.UD101_Date04"
+        },
+        "parentId": "006e6d3e-872c-4723-8502-89e382548cc6"
+      },
+      {
+        "id": "006e6d3e-872c-4723-8502-89e382548cc6",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "006e6d3e-872c-4723-8502-89e382548cc6",
+          "flexBasis": "50%",
+          "id": "div-col-006e6"
+        },
+        "parentId": "08d033ac-0947-4936-8374-2ad054a0eb4b"
+      },
+      {
+        "id": "b2cbffa6-9268-49ab-9ca4-99a7d4d4a301",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "b2cbffa6-9268-49ab-9ca4-99a7d4d4a301",
+          "labelText": "Delivered Date",
+          "id": "erp-text-box-b2cbf",
+          "epBinding": "POD.UD101_ShortChar08"
+        },
+        "parentId": "8d988a06-2df2-4002-a584-310db2946f40"
+      },
+      {
+        "id": "8d988a06-2df2-4002-a584-310db2946f40",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "8d988a06-2df2-4002-a584-310db2946f40",
+          "flexBasis": "50%",
+          "id": "div-col-8d988"
+        },
+        "parentId": "08d033ac-0947-4936-8374-2ad054a0eb4b"
+      },
+      {
+        "id": "08d033ac-0947-4936-8374-2ad054a0eb4b",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "08d033ac-0947-4936-8374-2ad054a0eb4b",
+          "id": "div-row-08d03"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "986266d7-6b71-4644-aae4-0c1870622d71",
+        "sourceTypeId": "erp-check-box",
+        "model": {
+          "guid": "986266d7-6b71-4644-aae4-0c1870622d71",
+          "labelText": "Delivered",
+          "id": "erp-check-box-98626",
+          "epBinding": "POD.UD101_CheckBox03"
+        },
+        "parentId": "48fc4fd1-eebf-4654-9969-bcd5d29ed2c7"
+      },
+      {
+        "id": "48fc4fd1-eebf-4654-9969-bcd5d29ed2c7",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "48fc4fd1-eebf-4654-9969-bcd5d29ed2c7",
+          "flexBasis": "50%",
+          "id": "div-col-48fc4"
+        },
+        "parentId": "98eb5f95-6336-4c0e-bb6f-fd99b5778dda"
+      },
+      {
+        "id": "e5f54f04-8c81-4ea0-b9b4-cb366f24ab61",
+        "sourceTypeId": "erp-text-box",
+        "model": {
+          "guid": "e5f54f04-8c81-4ea0-b9b4-cb366f24ab61",
+          "labelText": "Received By",
+          "id": "erp-text-box-e5f54",
+          "epBinding": "POD.UD101_ShortChar06"
+        },
+        "parentId": "b3dafa86-ee73-4b43-886d-827941d56601"
+      },
+      {
+        "id": "b3dafa86-ee73-4b43-886d-827941d56601",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "b3dafa86-ee73-4b43-886d-827941d56601",
+          "flexBasis": "50%",
+          "id": "div-col-b3daf"
+        },
+        "parentId": "98eb5f95-6336-4c0e-bb6f-fd99b5778dda"
+      },
+      {
+        "id": "98eb5f95-6336-4c0e-bb6f-fd99b5778dda",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "98eb5f95-6336-4c0e-bb6f-fd99b5778dda",
+          "id": "div-row-98eb5"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "40669501-6efb-42d4-b53a-5f234bb6e05b",
+        "sourceTypeId": "erp-picture-box",
+        "model": {
+          "guid": "40669501-6efb-42d4-b53a-5f234bb6e05b",
+          "labelText": "erp-picture-box-1",
+          "id": "erp-picture-box-40669",
+          "imageFillType": 0,
+          "epBinding": "POD.Calculated_Signature",
+          "pictureBoxWidth": 600
+        },
+        "parentId": "b2187d24-59ca-4557-9a0c-5a4364d92dd9"
+      },
+      {
+        "id": "b2187d24-59ca-4557-9a0c-5a4364d92dd9",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "b2187d24-59ca-4557-9a0c-5a4364d92dd9",
+          "flexBasis": "50%",
+          "id": "div-col-b2187",
+          "labelText": "Signature"
+        },
+        "parentId": "892ce090-8218-4667-a2a6-9ebf40a41af4"
+      },
+      {
+        "id": "351a6a96-a84e-405d-86dc-1d2f23371c8b",
+        "sourceTypeId": "erp-picture-box",
+        "model": {
+          "guid": "351a6a96-a84e-405d-86dc-1d2f23371c8b",
+          "labelText": "erp-picture-box-2",
+          "id": "erp-picture-box-351a6",
+          "imageFillType": 0,
+          "epBinding": "POD.Calculated_Map",
+          "pictureBoxWidth": 600
+        },
+        "parentId": "491bcb34-3906-4d38-bfd8-be3411db08ce"
+      },
+      {
+        "id": "491bcb34-3906-4d38-bfd8-be3411db08ce",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "491bcb34-3906-4d38-bfd8-be3411db08ce",
+          "flexBasis": "50%",
+          "id": "div-col-491bc",
+          "labelText": "Location"
+        },
+        "parentId": "892ce090-8218-4667-a2a6-9ebf40a41af4"
+      },
+      {
+        "id": "892ce090-8218-4667-a2a6-9ebf40a41af4",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "892ce090-8218-4667-a2a6-9ebf40a41af4",
+          "id": "div-row-892ce"
+        },
+        "parentId": "e08613e2-190f-4273-977a-ffafab204e8e"
+      },
+      {
+        "id": "e08613e2-190f-4273-977a-ffafab204e8e",
+        "sourceTypeId": "metafx-col",
+        "model": {
+          "guid": "e08613e2-190f-4273-977a-ffafab204e8e",
+          "flexBasis": "100%",
+          "id": "div-col-e0861"
+        },
+        "parentId": "8ce80336-e7d3-4ab4-87d7-76a168c7d100"
+      },
+      {
+        "id": "8ce80336-e7d3-4ab4-87d7-76a168c7d100",
+        "sourceTypeId": "metafx-div",
+        "model": {
+          "guid": "8ce80336-e7d3-4ab4-87d7-76a168c7d100",
+          "columns": 1,
+          "id": "div-row-8ce80"
+        },
+        "parentId": "dv-38e518-card-0#bodyComponents"
+      },
+      {
+        "parentId": null,
+        "id": "dv-38e518-card-0",
+        "sourceTypeId": "metafx-panel-card",
+        "model": {
+          "id": "dv-38e518-card-0",
+          "class": "PanelCard",
+          "guid": "6fb007b1-df3f-4bef-b94c-17f3817db05e",
+          "disabledToolBar": false,
+          "highLightPanelBar": true,
+          "title": "Details",
+          "expandMore": false,
+          "enableActionButton": false,
+          "footer": {},
+          "bodyComponents": []
+        },
+        "layoutData": {
+          "flexLayout": true,
+          "hostId": "ProofOfDelivery"
+        }
+      }
+    ],
+    "pageType": "Responsive",
+    "navigation": {
+      "pageCaption": "",
+      "tabId": "",
+      "enable": false,
+      "parentPage": null,
+      "epBinding": "",
+      "epBindingLevel": 0,
+      "epBindingPeerOrder": 0,
+      "dataSetId": "%datasetId%"
+    },
+    "width": 1440
+  }
+}

@@ -1,0 +1,454 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v5.0/events.json",
+  "contentVersion": "5.0",
+  "imports": [],
+  "events": [
+    {
+      "id": "window",
+      "trigger": {
+        "type": "Window",
+        "hook": "onLoad"
+      },
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "executeRefreshAll"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "executeRefreshAll",
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "refresh_Collections"
+              },
+              {
+                "type": "event-next",
+                "value": "refresh_UD101A"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "type": "Control",
+        "target": "btn_Update_Collections",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "erp-baq",
+          "caption": "kinetic-baq",
+          "mode": "update",
+          "baqId": "Ship_Collection",
+          "executeOptions": {},
+          "alias": "Collections",
+          "updateOptions": {
+            "operation": "UpdateBaq",
+            "allRows": true
+          }
+        }
+      ],
+      "id": "btn_Update_Collections",
+      "disable": false
+    },
+    {
+      "id": "btn_Add_Collections",
+      "trigger": {
+        "type": "Control",
+        "target": "btn_Add_Collections",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "dataview-set-current",
+          "value": "Collections"
+        },
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "UpdateBaqGetNew",
+            "erpBaqArgs": {
+              "baqId": "Ship_Collection",
+              "options": {
+                "populateDataView": true,
+                "updateOptions": {
+                  "operation": "UpdateBaqGetNew",
+                  "viewName": "Collections"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh_Collections",
+      "actions": [
+        {
+          "type": "property-set",
+          "param": {
+            "component": "afc95996-6209-4226-a3c5-7a661222b71f",
+            "props": [
+              {
+                "prop": "invalidated",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "actions": [
+        {
+          "type": "row-delete",
+          "dataview": "UD101A"
+        },
+        {
+          "type": "condition",
+          "param": {
+            "expression": "%dataset.UD101.hasChanges% === true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "BO_UD101_Update"
+              }
+            ],
+            "onFailure": [
+              {
+                "type": "data-commit",
+                "param": {
+                  "dataview": "UD101A"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "id": "BO_UD101A_Delete",
+      "description": "Delete data for DataviewId: UD101A",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "row-add",
+          "caption": "row-add",
+          "param": {
+            "dataview": "TransView",
+            "values": {
+              "Company": "",
+              "SelectAddPallets": false
+            }
+          }
+        }
+      ],
+      "id": "BO_UD101_GetByID",
+      "description": "Get data for BO method: GetByID",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svc": "Ice.BO.UD101Svc",
+            "svcPath": "Update",
+            "methodParameters": [
+              {
+                "field": "ds",
+                "type": "dataset"
+              }
+            ],
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "requestParamArgs": [
+                {
+                  "dataset": {
+                    "systemCode": "Ice",
+                    "datasetId": "UD101"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ],
+      "id": "BO_UD101_Update",
+      "description": "Update",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "id": "refreshAll",
+      "trigger": {
+        "type": "Control",
+        "target": "refreshAll",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "executeRefreshAll"
+        }
+      ]
+    },
+    {
+      "id": "window_events",
+      "trigger": {
+        "type": "Event",
+        "hook": "after",
+        "target": "window"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "BO_UD101_GetByID"
+        }
+      ]
+    },
+    {
+      "trigger": {
+        "hook": "onClick",
+        "type": "Control",
+        "target": "btn_Delete_Pallet"
+      },
+      "actions": [
+        {
+          "type": "row-delete",
+          "caption": "row-delete",
+          "dataview": "UD101A"
+        },
+        {
+          "type": "condition",
+          "param": {
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "BO_UD101_Update",
+                "caption": "event-next"
+              }
+            ],
+            "onFailure": [
+              {
+                "type": "data-commit",
+                "caption": "data-commit",
+                "param": {
+                  "dataview": "UD101A"
+                }
+              }
+            ]
+          },
+          "caption": "condition"
+        }
+      ],
+      "id": "BO_Pallet_Delete",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "trigger": {
+        "hook": "onClick",
+        "type": "Control",
+        "target": "btn_UpdatePallets"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "BO_UD101_Update",
+          "caption": "event-next"
+        }
+      ],
+      "id": "BO_Pallet_SavePallets",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "trigger": {
+        "hook": "onClick",
+        "type": "Control",
+        "target": "btn_Add_Pallet"
+      },
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "onSuccess": [
+              {
+                "type": "row-add",
+                "caption": "row-add",
+                "param": {
+                  "dataview": "UD101A",
+                  "values": {
+                    "Company": "{Constant.CompanyID}",
+                    "Key1": "{Collections.UD101_Key1}",
+                    "Key2": "{Collections.UD101_Key2}",
+                    "Key3": "{Collections.UD101_Key3}",
+                    "Key4": "{Collections.UD101_Key4}",
+                    "Key5": "{Collections.UD101_Key5}",
+                    "ChildKey2": "{Collections.UD101_Key2}",
+                    "ChildKey3": "{Collections.UD101_Key3}",
+                    "ChildKey4": "{Collections.UD101_Key4}",
+                    "ChildKey5": "{Collections.UD101_Key5}",
+                    "RowMod": "A"
+                  }
+                }
+              }
+            ]
+          },
+          "caption": "condition"
+        }
+      ],
+      "id": "BO_Pallet_Add",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "methodParameters": [
+              {
+                "field": "whereClauseUD101",
+                "type": "string"
+              },
+              {
+                "field": "whereClauseUD101Attch",
+                "type": "string"
+              },
+              {
+                "field": "whereClauseUD101A",
+                "type": "string"
+              },
+              {
+                "field": "whereClauseUD101AAttch",
+                "type": "string"
+              },
+              {
+                "field": "pageSize",
+                "type": "integer"
+              },
+              {
+                "field": "absolutePage",
+                "type": "integer"
+              }
+            ],
+            "svc": "Ice.BO.UD101Svc",
+            "svcPath": "GetRows",
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "responseParamArgs": [
+                {
+                  "paramName": "Pallets",
+                  "viewName": "UD101A",
+                  "responsePath": "returnObj"
+                }
+              ]
+            }
+          },
+          "caption": "rest-kinetic"
+        }
+      ],
+      "id": "BO_Pallet_GetRows",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "trigger": {
+        "hook": "rowChanged",
+        "type": "DataView",
+        "target": "Collections"
+      },
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "methodParameters": [
+              {
+                "field": "key1",
+                "type": "string",
+                "epBinding": "[Collections].[UD101_Number01]"
+              },
+              {
+                "field": "key2",
+                "type": "string",
+                "value": ""
+              },
+              {
+                "field": "key3",
+                "type": "string",
+                "value": ""
+              },
+              {
+                "field": "key4",
+                "type": "string",
+                "value": ""
+              },
+              {
+                "field": "key5",
+                "type": "string",
+                "value": ""
+              }
+            ],
+            "svc": "Ice.BO.UD101Svc",
+            "svcPath": "GetByID",
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "responseParamArgs": [
+                {
+                  "paramName": "UD101A",
+                  "viewName": "UD101A",
+                  "responsePath": "returnObj"
+                }
+              ]
+            }
+          },
+          "caption": "rest-kinetic"
+        }
+      ],
+      "id": "BO_Pallet_Get",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [],
+      "id": "BO_Pallet_Update",
+      "customizable": true,
+      "disable": false
+    },
+    {
+      "actions": [],
+      "id": "Collections_Get",
+      "customizable": true,
+      "disable": false
+    }
+  ],
+  "patch": []
+}

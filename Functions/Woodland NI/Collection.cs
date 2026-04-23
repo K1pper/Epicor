@@ -1,57 +1,121 @@
 IsSuccess = false;
 ErrorMessage = "Success";
+JobNumber = string.Empty;
+Barcodes = string.Empty;
 
-try
+if (CollectionRequested)
 {
-    var auth = this.ThisLib.Authenticate();
-
-    using (var client = new HttpClient())
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
     {
-        using (var request = new HttpRequestMessage(HttpMethod.Post, auth.BaseURL + "/job?return=BARCODES,PALLETS"))
+        try
         {
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", auth.token);
+            var auth = this.ThisLib.Authenticate();
 
-
-            var payload = this.ThisLib.GetCollectionRequest(PackNum);
-
-            var content = new StringContent(payload, null, "application/json");
-            request.Content = content;
-
-            var response = client.SendAsync(request).Result;
-
-            var result = response.Content.ReadAsStringAsync().Result;
-
-            Ice.Diagnostics.Log.WriteEntry("Result");
-            Ice.Diagnostics.Log.WriteEntry(result);
-
-            if (response.IsSuccessStatusCode)
+            using (var client = new HttpClient())
             {
-                using (var doc = JsonDocument.Parse(result))
+                using (var request = new HttpRequestMessage(HttpMethod.Post, auth.BaseURL + "/job?return=BARCODES,PALLETS"))
                 {
-                    var dataElement = doc.RootElement.GetProperty("data");
+                    request.Headers.Add("Accept", "application/json");
+                    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", auth.token);
 
-                    jobNumber = dataElement.GetProperty("jobNumber").GetInt32().ToString();
+                    var collectionRequest = this.ThisLib.GetCollectionRequest(PackNum, auth.Account, CollectionDate, DeliveryDate);
 
-                    // barcodes
-                    var barcodeList = dataElement.GetProperty("barcodes")
-                           .EnumerateArray()
-                           .Select(b => b.GetProperty("barcode").GetString());
+                    if (collectionRequest.IsSuccess == false)
+                    {
+                        ErrorMessage = collectionRequest.ErrorMessage;
+                    }
+                    else
+                    {
+                        var content = new StringContent(collectionRequest.Request, null, "application/json");
+                        request.Content = content;
 
-                    barcodes = string.Join(", ", barcodeList);
+                        var response = client.SendAsync(request).Result;
+
+                        var result = response.Content.ReadAsStringAsync().Result;
+                        if (response.IsSuccessStatusCode)
+                        {
+                            using (var doc = JsonDocument.Parse(result))
+                            {
+                                var dataElement = doc.RootElement.GetProperty("data");
+
+                                JobNumber = dataElement.GetProperty("jobNumber").GetInt32().ToString();
+
+                                // barcodes
+                                if (dataElement.TryGetProperty("barcodes", out
+                                    var barcodesElement))
+                                {
+                                    var barcodeList = dataElement.GetProperty("barcodes")
+                                      .EnumerateArray()
+                                      .Select(b => b.GetProperty("barcode").GetString());
+
+                                    Barcodes = string.Join(", ", barcodeList);
+                                }
+                            }
+                            IsSuccess = true;
+                        }
+                    }
                 }
-
             }
+        }
+        catch (Exception ex)
+        {
+            Ice.Diagnostics.Log.WriteEntry("Ship Collection Exception: " + ex.ToString());
+            ErrorMessage = ex.ToString();
+
+            StringBuilder debugMessage = new StringBuilder();
+            debugMessage.AppendLine("GHA:Ship Collection");
+            debugMessage.AppendLine(ErrorMessage);
+            Ice.Diagnostics.Log.WriteEntry(debugMessage.ToString());
         }
     }
 }
-catch (Exception ex)
+else
 {
-    Ice.Diagnostics.Log.WriteEntry("Ship Collection Exception: " + ex.Message);
-    ErrorMessage = ex.Message;
+    if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+    {
+        try
+        {
+            var pack = Db.UD101.Where(r => r.Company == Session.CompanyID).Where(r => r.Number01 == PackNum).FirstOrDefault();
 
-    StringBuilder debugMessage = new StringBuilder();
-    debugMessage.AppendLine("GHA:Ship Collection");
-    debugMessage.AppendLine(ErrorMessage);
-    Ice.Diagnostics.Log.WriteEntry(debugMessage.ToString());
+            if (pack == null)
+            {
+                IsSuccess = false;
+                ErrorMessage = "Pack not found";
+            }
+            else
+            {
+                var auth = this.ThisLib.Authenticate();
+
+                using (var client = new HttpClient())
+                {
+                    using (var request = new HttpRequestMessage(new HttpMethod("PATCH"), auth.BaseURL + "/job/" + pack.ShortChar05))
+                    {
+                        request.Headers.Add("Accept", "application/json");
+                        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", auth.token);
+
+                        var content = new StringContent("{\n  \"data\": {\n    \"account\": \"" + Session.CompanyID + "\",\n    \"jobCancelled\": true\n  }\n}", null, "application/json");
+
+                        request.Content = content;
+
+                        var response = client.SendAsync(request).Result;
+
+                        var result = response.Content.ReadAsStringAsync().Result;
+
+                        IsSuccess = true;
+                        ErrorMessage = "Cancelled";
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Ice.Diagnostics.Log.WriteEntry("Ship Collection Exception: " + ex.ToString());
+            ErrorMessage = ex.ToString();
+
+            StringBuilder debugMessage = new StringBuilder();
+            debugMessage.AppendLine("GHA:Ship Collection");
+            debugMessage.AppendLine(ErrorMessage);
+            Ice.Diagnostics.Log.WriteEntry(debugMessage.ToString());
+        }
+    }
 }

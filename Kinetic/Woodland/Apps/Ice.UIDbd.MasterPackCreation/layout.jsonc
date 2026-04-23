@@ -1,0 +1,147 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v3.0/layout.json",
+  "contentVersion": "3.0",
+  "layout": {
+    "name": "ShipmentCreation",
+    "guid": "5f99c468-77b0-46d3-8075-d9d23fbc71bb",
+    "namespace": "Ice.UIDbd.MasterPackCreation",
+    "caption": "Shipment Creation",
+    "viewType": "Dashboard",
+    "components": [
+      {
+        "id": "65d5af04-8342-40ed-875d-9381bf400daa",
+        "sourceTypeId": "erp-button",
+        "model": {
+          "guid": "65d5af04-8342-40ed-875d-9381bf400daa",
+          "labelText": "Create Shipments",
+          "id": "CreateShipmentsButton"
+        },
+        "parentId": "47b773bd-82fc-4891-8cfb-b9acb7652d9b#expandedHeaderComponents"
+      },
+      {
+        "id": "08400d34-e4de-4ac6-9c62-1acc716780dc",
+        "sourceTypeId": "erp-button",
+        "model": {
+          "guid": "08400d34-e4de-4ac6-9c62-1acc716780dc",
+          "labelText": "Create",
+          "id": "CreateButton",
+          "hidden": true
+        },
+        "parentId": "47b773bd-82fc-4891-8cfb-b9acb7652d9b#expandedHeaderComponents"
+      },
+      {
+        "parentId": null,
+        "id": "47b773bd-82fc-4891-8cfb-b9acb7652d9b",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "guid": "47b773bd-82fc-4891-8cfb-b9acb7652d9b",
+          "id": "47b773bd-82fc-4891-8cfb-b9acb7652d9b",
+          "title": "Pallets",
+          "disablePanelCardStyle": false,
+          "expanded": true,
+          "gridModel": {
+            "epBinding": "MasterPacking",
+            "columns": [
+              {
+                "field": "ShipHead_PackNum",
+                "title": "Pack ID",
+                "editable": false
+              },
+              {
+                "field": "ShipHead_PalletNum_c",
+                "title": "Pallet Number",
+                "editable": false
+              },
+              {
+                "field": "Customer_CustID",
+                "title": "Cust ID",
+                "editable": false
+              },
+              {
+                "field": "Customer_Name",
+                "title": "Name",
+                "editable": false
+              },
+              {
+                "field": "ShipDtl_ShipToNum",
+                "title": "Ship To",
+                "editable": false
+              },
+              {
+                "field": "Calculated_ShipBy",
+                "title": "Ship By",
+                "editable": false
+              },
+              {
+                "field": "Calculated_Add",
+                "title": "Add",
+                "editable": false,
+                "selector": true,
+                "hidden": true
+              },
+              {
+                "field": "Calculated_NeedBy",
+                "title": "Need By"
+              },
+              {
+                "field": "ShipHead_PalletSize_c",
+                "title": "Pallet Spaces"
+              },
+              {
+                "field": "ShipVia_Description",
+                "title": "Ship Via"
+              }
+            ],
+            "editable": false,
+            "providerModel": {
+              "baqId": "Ship_MasterPacking"
+            },
+            "selectable": true
+          },
+          "expandedHeaderComponents": []
+        },
+        "layoutData": {
+          "flexLayout": true,
+          "hostId": "ShipmentCreation"
+        }
+      },
+      {
+        "parentId": null,
+        "id": "999afd23-34c5-4537-abaa-c4345b003e73",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "guid": "999afd23-34c5-4537-abaa-c4345b003e73",
+          "title": "Master Pack Creation",
+          "id": "MasterPackGrid",
+          "disablePanelCardStyle": false,
+          "expanded": true,
+          "gridModel": {
+            "providerModel": {
+              "epBinding": "BAQView",
+              "baqId": "Ship_MasterPacking",
+              "baqOptions": {}
+            },
+            "rowReorder": {}
+          },
+          "hidden": true
+        },
+        "layoutData": {
+          "flexLayout": true,
+          "hostId": "ShipmentCreation"
+        }
+      }
+    ],
+    "pageType": "Responsive",
+    "navigation": {
+      "pageCaption": "",
+      "tabId": "",
+      "enable": false,
+      "parentPage": null,
+      "epBinding": "",
+      "epBindingLevel": 0,
+      "epBindingPeerOrder": 0,
+      "dataSetId": "%datasetId%"
+    },
+    "width": 1440
+  }
+}
