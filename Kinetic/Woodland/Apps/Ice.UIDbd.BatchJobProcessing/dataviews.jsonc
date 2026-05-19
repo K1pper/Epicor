@@ -1,0 +1,38 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v4.0/dataviews.json",
+  "contentVersion": "4.0",
+  "imports": [],
+  "dataviews": [
+    {
+      "id": "BatchJobProcessing",
+      "data": "GHA-BatchJobProcessing",
+      "name": "BatchJobProcessing",
+      "staticFilter": "",
+      "table": "BatchJobProcessing",
+      "confirmChanges": false,
+      "customizable": true,
+      "isSystemView": false,
+      "schema": "baq"
+    },
+    {
+      "id": "BatchJobMaterialIssues",
+      "data": "GHA-BatchJobMaterialIssues",
+      "name": "BatchJobMaterialIssues",
+      "staticFilter": "",
+      "table": "BatchJobMaterialIssues",
+      "confirmChanges": false,
+      "customizable": true,
+      "isSystemView": false,
+      "schema": "baq",
+      "parent": {
+        "parentDataview": "BatchJobProcessing",
+        "parentColumns": [
+          "JobOper_JobNum"
+        ],
+        "childColumns": [
+          "JobHead_JobNum"
+        ]
+      }
+    }
+  ]
+}

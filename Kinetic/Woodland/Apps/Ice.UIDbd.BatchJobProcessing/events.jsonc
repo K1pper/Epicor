@@ -1,0 +1,161 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v5.0/events.json",
+  "contentVersion": "5.0",
+  "imports": [],
+  "events": [
+    {
+      "id": "window",
+      "trigger": {
+        "type": "Window",
+        "hook": "onLoad"
+      },
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "executeRefreshAll"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "executeRefreshAll",
+      "actions": [
+        {
+          "type": "condition",
+          "param": {
+            "expression": "true",
+            "onSuccess": [
+              {
+                "type": "event-next",
+                "value": "refresh_BatchJobProcessing"
+              },
+              {
+                "type": "event-next",
+                "value": "refresh_BatchJobMaterialIssues"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh_BatchJobProcessing",
+      "actions": [
+        {
+          "type": "property-set",
+          "param": {
+            "component": "afad876f-0ddd-4292-be5b-968ad6f25551",
+            "props": [
+              {
+                "prop": "invalidated",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refresh_BatchJobMaterialIssues",
+      "actions": [
+        {
+          "type": "property-set",
+          "param": {
+            "component": "b403005d-616a-4b40-81bb-85e0681d4561",
+            "props": [
+              {
+                "prop": "invalidated",
+                "value": "true"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "refreshAll",
+      "trigger": {
+        "type": "Control",
+        "target": "refreshAll",
+        "hook": "onClick"
+      },
+      "actions": [
+        {
+          "type": "event-next",
+          "value": "executeRefreshAll"
+        }
+      ]
+    },
+    {
+      "id": "window_events",
+      "trigger": {
+        "type": "Event",
+        "hook": "after",
+        "target": "window"
+      },
+      "actions": []
+    },
+    {
+      "trigger": {
+        "hook": "onClick",
+        "type": "Control",
+        "target": "CompleteJobsButton"
+      },
+      "actions": [
+        {
+          "type": "rest-erp",
+          "param": {
+            "requestMethod": "POST",
+            "erpRequestMethod": "ErpPostWithDataViewProcessing",
+            "svcPath": "BatchJobProcessing",
+            "options": {
+              "efxLibrary": "GHA"
+            },
+            "erpRestPostArgs": {
+              "processResponse": true,
+              "requestParamArgs": [
+                {
+                  "paramPath": "input",
+                  "viewName": "BatchJobProcessing",
+                  "methodParamModifier": "SendAllRows"
+                }
+              ]
+            }
+          },
+          "caption": "rest-kinetic"
+        },
+        {
+          "type": "erp-message-handler",
+          "param": {
+            "type": "Slideout",
+            "level": "info",
+            "message": "{actionResult.Result}",
+            "buttons": "ok",
+            "result": "Ok",
+            "title": "Processed Jobs"
+          },
+          "option": {},
+          "caption": "kinetic-message-handler"
+        },
+        {
+          "type": "erp-baq",
+          "caption": "kinetic-baq",
+          "mode": "get",
+          "baqId": "GHA-BatchJobProcessing",
+          "executeOptions": {},
+          "alias": "BatchJobProcessing"
+        }
+      ],
+      "id": "CompleteBatchJobs",
+      "customizable": true,
+      "disable": false
+    }
+  ]
+}

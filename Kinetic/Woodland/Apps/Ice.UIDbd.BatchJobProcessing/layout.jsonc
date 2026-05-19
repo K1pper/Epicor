@@ -1,0 +1,183 @@
+{
+  "$schema": "https://schemas.developer.epicor.com/schemas/v3.0/layout.json",
+  "contentVersion": "3.0",
+  "layout": {
+    "name": "BatchJobProcessing",
+    "guid": "2dcd1674-5e34-4d98-b493-c75747027376",
+    "namespace": "Ice.UIDbd.Template",
+    "caption": "Batch Job Processing",
+    "viewType": "Dashboard",
+    "components": [
+      {
+        "id": "f47089d9-072a-4c4b-b55d-c121b2b457d8",
+        "sourceTypeId": "erp-button",
+        "model": {
+          "guid": "f47089d9-072a-4c4b-b55d-c121b2b457d8",
+          "labelText": "Complete Selected Jobs",
+          "id": "CompleteJobsButton"
+        },
+        "parentId": "dv-36ee84-grid-0#expandedHeaderComponents"
+      },
+      {
+        "parentId": null,
+        "id": "dv-36ee84-grid-0",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "id": "dv-36ee84-grid-0",
+          "guid": "afad876f-0ddd-4292-be5b-968ad6f25551",
+          "title": "Open Batch Jobs",
+          "expanded": true,
+          "autoFillContainer": false,
+          "gridModel": {
+            "height": 350,
+            "scrollable": "virtual",
+            "pageSize": 100,
+            "sortable": true,
+            "resizable": true,
+            "editable": true,
+            "disablePasteUpdate": true,
+            "disablePasteNew": true,
+            "columns": [
+              {
+                "field": "JobOper_JobNum",
+                "title": "Job Number",
+                "hidden": false,
+                "editable": false,
+                "selector": false
+              },
+              {
+                "field": "JobHead_UserChar1",
+                "title": "PBJB Number",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobHead_PartNum",
+                "title": "Part Number",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobHead_PartDescription",
+                "title": "Description",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobOper_OpCode",
+                "title": "Operation",
+                "hidden": true,
+                "editable": false
+              },
+              {
+                "field": "JobOper_OprSeq",
+                "title": "Operation",
+                "hidden": true,
+                "editable": false
+              },
+              {
+                "field": "Calculated_Add",
+                "selector": true,
+                "hidden": true
+              }
+            ],
+            "id": "grdLandingPage",
+            "providerModel": {
+              "description": "Grid_BatchJobProcessing: Summary",
+              "isDefault": true,
+              "serverPaging": true,
+              "epBinding": "BatchJobProcessing",
+              "baqId": "GHA-BatchJobProcessing",
+              "autoRefreshOnLoad": true,
+              "baqOptions": {}
+            },
+            "filterable": true,
+            "selectable": true
+          },
+          "expandedHeaderComponents": [],
+          "expandedFilter": true
+        }
+      },
+      {
+        "parentId": null,
+        "id": "dv-6d7d46-grid-1",
+        "sourceTypeId": "metafx-panel-card-grid",
+        "model": {
+          "id": "dv-6d7d46-grid-1",
+          "guid": "b403005d-616a-4b40-81bb-85e0681d4561",
+          "title": "Material Issues",
+          "expanded": true,
+          "autoFillContainer": false,
+          "gridModel": {
+            "height": 350,
+            "scrollable": "virtual",
+            "pageSize": 100,
+            "sortable": true,
+            "resizable": true,
+            "editable": true,
+            "disablePasteUpdate": true,
+            "disablePasteNew": true,
+            "columns": [
+              {
+                "field": "JobMtl_PartNum",
+                "title": "Part",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobMtl_Description",
+                "title": "Description",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobMtl_RequiredQty",
+                "title": "Required Qty",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobMtl_IssuedQty",
+                "title": "Issued",
+                "hidden": false,
+                "editable": false
+              },
+              {
+                "field": "JobHead_JobNum",
+                "hidden": true
+              },
+              {
+                "field": "Calculated_TranDate",
+                "title": "Date"
+              }
+            ],
+            "id": "grdLandingPage",
+            "providerModel": {
+              "description": "Grid_BatchJobMaterialIssues: Summary",
+              "isDefault": true,
+              "serverPaging": true,
+              "epBinding": "BatchJobMaterialIssues",
+              "baqId": "GHA-BatchJobMaterialIssues",
+              "autoRefreshOnLoad": true,
+              "baqOptions": {}
+            },
+            "selectionOptions": {},
+            "editOptions": {}
+          }
+        }
+      }
+    ],
+    "pageType": "Responsive",
+    "navigation": {
+      "pageCaption": "",
+      "tabId": "",
+      "enable": false,
+      "parentPage": null,
+      "epBinding": "",
+      "epBindingLevel": 0,
+      "epBindingPeerOrder": 0,
+      "dataSetId": "%datasetId%"
+    },
+    "width": 1440
+  }
+}
